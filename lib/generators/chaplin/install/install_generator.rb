@@ -30,8 +30,8 @@ module Chaplin
       end
 
       def generate_app_files
-        template "application.js.coffee", "#{javascript_path}/application.js.coffee"
-        template "app_template.js.coffee", "#{javascript_path}/#{app_filename}.js.coffee"
+        template "application.js", "#{javascript_path}/application.js"
+        template "app_template.js", "#{javascript_path}/#{app_filename}.js"
       end
 
       def apply_requirejs
