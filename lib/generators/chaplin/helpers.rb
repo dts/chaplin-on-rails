@@ -31,7 +31,7 @@ module Chaplin
       end
 
       def template_path
-        File.join(asset_path, "templates")
+        File.join("app","views")
       end
 
       def singular_file_name

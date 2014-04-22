@@ -10,8 +10,8 @@ module Chaplin
       desc "Generates a Chaplin.js view"
 
       def generate_js_and_template
-        template "view_template.js", "#{javascript_path}/views/#{file_name}_view.js"
-        template "template_template.hbs", "#{javascript_path}/templates/#{file_name}.hbs"
+        template "view_template.js", "#{javascript_path}/views/#{file_path}_view.js"
+        template "template_template.jst.ejs", "#{template_path}/#{file_path}.jst.ejs"
       end
     end
   end
