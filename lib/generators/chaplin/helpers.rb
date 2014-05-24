@@ -14,6 +14,10 @@ module Chaplin
         File.join(javascript_path, "models")
       end
 
+      def rails_view_path
+        File.join("app","views")
+      end
+
       def view_path
         File.join(javascript_path, "views")
       end

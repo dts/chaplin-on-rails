@@ -24,14 +24,22 @@ module Chaplin
 
         # copy all /javascripts directory
         directory 'javascripts', javascript_path
-
-        # create empty 'assets/templates' directory
-        empty_directory template_path
+        directory 'views', rails_view_path
       end
 
       def generate_app_files
         template "application.js", "#{javascript_path}/application.js"
         template "app_template.js", "#{javascript_path}/#{app_filename}.js"
+      end
+
+      def patch_asset_config
+        inject_into_file File.join("config","application.rb") , :after => "Rails::Application\n" do
+<<-CONFIG
+    config.assets.paths << Rails.root.join('app','views')
+    config.requirejs.logical_asset_filter = [/\.js$/]
+    config.assets.precompile += %w(*.js)
+CONFIG
+        end
       end
 
       def apply_requirejs
@@ -41,6 +49,7 @@ module Chaplin
         # check if we can find layout file
         # TODO doesn't work during 'destroy' command
         if layout_path
+          gsub_file(layout_path,', "data-turbolinks-track" => true','')
           # inject requirejs tag
           unless gsub_file(layout_path, /javascript_include_tag/, 'requirejs_include_tag')
             display "Can't find a javascript_include_tag in '#{layout_path}'!"
